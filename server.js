@@ -5,7 +5,11 @@ const jwt = require('jsonwebtoken');
 const app = express();
 const port = 3000;
 const loginRouter = require('./routers/loginRouter');
+const storageRouter = require('./routers/storageRouter');
 const cookieParser = require('cookie-parser');
+const connectDB = require('./mongo');
+
+connectDB();
 
 app.use(cookieParser());
 app.use(express.json());
@@ -15,7 +19,7 @@ app.use(cors());
 console.log(process.env.secretKey);
 // Route handler for /login
 app.use('/login', loginRouter);
-
+app.use('/storage', storageRouter);
 app.get('/', (req, res) => {
     res.send('Hello, World!');
 });
